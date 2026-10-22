@@ -1,8 +1,12 @@
 package com.vlack.pdfview.sender.ui
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
@@ -79,6 +83,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.vlack.pdfview.sender.MainViewModel
 import com.vlack.pdfview.sender.R
+import com.vlack.pdfview.sender.data.DocumentIO
 import com.vlack.pdfview.sender.model.ConnectionState
 import com.vlack.pdfview.sender.model.PickedDocument
 import com.vlack.pdfview.sender.model.SendFormat
@@ -110,6 +115,22 @@ fun SenderRoute(viewModel: MainViewModel) {
         contract = ActivityResultContracts.RequestMultiplePermissions(),
     ) { result ->
         if (result.values.any { !it }) viewModel.notify(R.string.error_bluetooth_permission)
+    }
+
+    // The Samsung Accessory Service reads the outgoing file itself, so the file has to live in shared
+    // storage. Android 11+ needs "all files access" for that, which is granted in system settings.
+    val storageSettingsLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+    ) { }
+    val storagePermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+    ) { }
+
+    fun ensureStorageAccess(): Boolean {
+        if (DocumentIO.hasSharedStorageAccess(context)) return true
+        viewModel.notify(R.string.error_storage_permission)
+        requestStorageAccess(context, storageSettingsLauncher::launch, storagePermissionLauncher::launch)
+        return false
     }
 
     LaunchedEffect(Unit) {
@@ -159,12 +180,33 @@ fun SenderRoute(viewModel: MainViewModel) {
         onFileNameChange = viewModel::onFileNameChange,
         onContentChange = viewModel::onContentChange,
         onFormatChange = viewModel::onFormatChange,
-        onPickDocument = { pickDocument.launch(DOCUMENT_MIME_TYPES) },
+        onPickDocument = { if (ensureStorageAccess()) pickDocument.launch(DOCUMENT_MIME_TYPES) },
         onClearDocument = viewModel::clearPickedDocument,
         onConnect = viewModel::connect,
-        onSubmit = viewModel::submit,
+        onSubmit = { if (ensureStorageAccess()) viewModel.submit() },
         onCancelTransfer = viewModel::cancelTransfer,
     )
+}
+
+private fun requestStorageAccess(
+    context: Context,
+    openSettings: (Intent) -> Unit,
+    requestPermission: (String) -> Unit,
+) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        val appIntent = Intent(
+            Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+            Uri.parse("package:${context.packageName}"),
+        )
+        val intent = if (appIntent.resolveActivity(context.packageManager) != null) {
+            appIntent
+        } else {
+            Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+        }
+        runCatching { openSettings(intent) }
+    } else {
+        requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    }
 }
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)

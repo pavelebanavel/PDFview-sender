@@ -39,6 +39,8 @@
     <string name="error_bluetooth_permission">Bluetooth permission is required to find the watch</string>
     <string name="error_send_failed">Could not send the document</string>
     <string name="error">Error</string>
+    <string name="error_with_code">Transfer failed (code %1$d)</string>
+    <string name="error_storage_permission">Allow access to files so the watch service can read the document</string>
     <string name="connect_first">Connect the watch first</string>
 
     <string name="transfer_complete">Document sent to the watch</string>

@@ -20,6 +20,8 @@ data class PickedDocument(
     val name: String,
     val sizeBytes: Long,
     val path: String,
+    /** True when [path] is a private copy made by this app (safe to delete), false for the user's own file. */
+    val staged: Boolean = true,
 )
 
 sealed interface TransferState {

@@ -35,6 +35,8 @@
     <string name="error_bluetooth_permission">Без разрешения Bluetooth часы не найти</string>
     <string name="error_send_failed">Не удалось отправить документ</string>
     <string name="error">Ошибка</string>
+    <string name="error_with_code">Не удалось отправить (код %1$d)</string>
+    <string name="error_storage_permission">Разрешите доступ к файлам, чтобы сервис часов мог прочитать документ</string>
     <string name="connect_first">Сначала подключите часы</string>
 
     <string name="transfer_complete">Документ отправлен на часы</string>

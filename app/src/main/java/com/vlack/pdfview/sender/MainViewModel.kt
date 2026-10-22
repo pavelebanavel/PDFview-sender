@@ -67,9 +67,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             showMessage(R.string.sending_cancelled)
         }
 
-        override fun onTransferFailed() {
+        override fun onTransferFailed(errorCode: Int) {
             _uiState.update { it.copy(transfer = TransferState.Idle) }
-            showMessage(R.string.error)
+            showMessage(R.string.error_with_code, errorCode)
         }
 
         override fun onMessage(resId: Int) {
@@ -126,6 +126,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             val result = withContext(Dispatchers.IO) {
                 runCatching { DocumentIO.importDocument(getApplication(), uri) }
             }
+            result.exceptionOrNull()?.let { android.util.Log.e("MainViewModel", "importDocument", it) }
             _uiState.update { state ->
                 val document = result.getOrNull()
                 state.copy(
@@ -189,6 +190,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     state.content,
                 ).absolutePath
             } catch (e: IOException) {
+                android.util.Log.e("MainViewModel", "writeTextDocument", e)
                 showMessage(R.string.error_create_document)
                 return
             }

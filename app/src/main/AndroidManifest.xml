@@ -14,6 +14,17 @@
         tools:targetApi="s" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- The Samsung Accessory Service reads the outgoing file by path, so it is staged in shared storage. -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29" />
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
 
@@ -70,6 +81,21 @@
                 <action android:name="com.samsung.accessory.ftconnection" />
             </intent-filter>
         </receiver>
+
+        <!--
+            The Samsung Accessory file-transfer SDK hands the outgoing file to the Samsung Accessory
+            Service through a content URI built with FileProvider.getUriForFile(context, packageName, file).
+            Without this provider (authority = application id) every transfer fails with ERROR_FILE_IO.
+        -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
 
         <meta-data
             android:name="AccessoryServicesLocation"

@@ -31,7 +31,7 @@ class FileTransferSender : SAAgent(TAG, ServiceConnection::class.java) {
         fun onTransferProgress(percent: Int)
         fun onTransferCompleted()
         fun onTransferCancelled()
-        fun onTransferFailed()
+        fun onTransferFailed(errorCode: Int)
         fun onMessage(@StringRes resId: Int)
     }
 
@@ -60,7 +60,7 @@ class FileTransferSender : SAAgent(TAG, ServiceConnection::class.java) {
                 SAFileTransfer.ERROR_NONE -> listener?.onTransferCompleted()
                 SAFileTransfer.ERROR_PEER_AGENT_REJECTED,
                 SAFileTransfer.ERROR_CONNECTION_LOST -> listener?.onTransferCancelled()
-                else -> listener?.onTransferFailed()
+                else -> listener?.onTransferFailed(errorCode)
             }
         }
 
@@ -76,7 +76,7 @@ class FileTransferSender : SAAgent(TAG, ServiceConnection::class.java) {
                     listener?.onMessage(R.string.onCancelAllCompletedNotFound)
                 SAFileTransfer.ERROR_NOT_SUPPORTED ->
                     listener?.onMessage(R.string.onCancelAllCompletedNotSupported)
-                else -> listener?.onTransferFailed()
+                else -> listener?.onTransferFailed(errorCode)
             }
         }
     }
@@ -143,6 +143,8 @@ class FileTransferSender : SAAgent(TAG, ServiceConnection::class.java) {
         }
 
         return try {
+            val file = java.io.File(path)
+            Log.d(TAG, "sendFile: $path exists=${file.exists()} canRead=${file.canRead()} size=${file.length()}")
             val id = transfer.send(peer, path)
             if (id < 0) {
                 listener?.onMessage(R.string.error_send_failed)
@@ -222,6 +224,16 @@ class FileTransferSender : SAAgent(TAG, ServiceConnection::class.java) {
     }
 
     private fun startRunningInForeground() {
+        // A connectedDevice foreground service needs a granted Bluetooth permission on Android 14+.
+        // On the very first launch the runtime dialog has not been answered yet, so skip quietly.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
+            checkSelfPermission(android.Manifest.permission.BLUETOOTH_CONNECT) !=
+            android.content.pm.PackageManager.PERMISSION_GRANTED
+        ) {
+            Log.i(TAG, "Bluetooth permission not granted yet, skipping foreground mode")
+            return
+        }
+
         val manager = getSystemService(NotificationManager::class.java) ?: return
         manager.createNotificationChannel(
             NotificationChannel(
