@@ -1,29 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="send">Отправить</string>
-    <string name="seek_and_connect">Подключиться к часам</string>
+
+    <string name="app_subtitle">Отправка документов на часы</string>
+
+    <string name="status_connected_short">На связи</string>
+    <string name="status_connecting_short">Поиск…</string>
+    <string name="status_offline_short">Не в сети</string>
+    <string name="status_connecting">Подключение…</string>
+    <string name="connect_watch">Подключить часы</string>
+    <string name="connection_banner_title">Часы не подключены</string>
+    <string name="connection_banner_body">Откройте Docs View на часах, чтобы установить соединение</string>
+
+    <string name="file_name">Имя файла</string>
+    <string name="file_name_hint">например, конспект</string>
+    <string name="content_label">Содержимое</string>
+    <string name="content_hint">Напишите текст документа…</string>
+
+    <string name="format">Формат</string>
+    <string name="format_hint">Расширение файла</string>
+
+    <string name="choose_document">Выбрать готовый документ</string>
+    <string name="opening_document">Открываю…</string>
+    <string name="selected_document_hint">%1$s · поля выше игнорируются</string>
+    <string name="clear_selection">Убрать выбор</string>
+
+    <string name="send_to_watch">Отправить на часы</string>
+    <string name="sending">Отправка</string>
     <string name="cancel">Отмена</string>
-    <string name="cancelAll">Отменить всё</string>
-    <string name="DEVICE_NOT_SUPPORTED">Устройство не поддерживается</string>
-    <string name="LIBRARY_NOT_INSTALLED">Приложение Samsung не установленно</string>
-    <string name="CONNECTION_OK">Часы подключены</string>
-    <string name="CONNECTION_ALREADY_EXIST">Часы подключены</string>
-    <string name="NO_AGENT_FOUND">Устройство не найдено</string>
-    <string name="choice_file">Выбрать файл</string>
-    <string name="how_to">Откройте Docs View или PDFview на часах</string>
-    <string name="NO_PEER_FOUND_ON_SEND">Часы не найдены, попробуйте еще раз</string>
-    <string name="NO_PEER_AGENT_FOUND">Часы не найдены, попробуйте еще раз</string>
-    <string name="CONNECTION_NOT_MADE">Соединение не может быть установленно. Попробуйте еще раз</string>
-    <string name="UNKNOWN_ERROR">Соединение не установленно по неизвестной причине</string>
-    <string name="CANNOT_INIT">Соединение не установленно</string>
-    <string name="ILLEGAL_ARGUMENT">Ошибка</string>
-    <string name="onCancelAllCompletedNotFound">Ошибка, передачи не найдены</string>
-    <string name="onCancelAllCompletedNotSupported">Ошибка, действие не поддерживается</string>
+
+    <string name="error_empty_name">Введите имя файла</string>
+    <string name="error_empty_content">Введите текст документа</string>
+    <string name="error_create_document">Не удалось создать файл</string>
+    <string name="error_import_document">Не удалось открыть документ</string>
+    <string name="error_bluetooth_permission">Без разрешения Bluetooth часы не найти</string>
+    <string name="error_send_failed">Не удалось отправить документ</string>
     <string name="error">Ошибка</string>
-    <string name="transfer_completed">Передача завершена</string>
-    <string name="no_binding">Нет подключения к сервису</string>
-    <string name="not_bound">Сервис не подключен</string>
-    <string name="sending_file_toast">Отправка %1$s размером %2$s</string>
-    <string name="transfer_complete">Отправка завершена!</string>
+    <string name="connect_first">Сначала подключите часы</string>
+
+    <string name="transfer_complete">Документ отправлен на часы</string>
     <string name="sending_cancelled">Отправка отменена</string>
+    <string name="not_bound">Сервис передачи ещё не готов</string>
+
+    <string name="DEVICE_NOT_SUPPORTED">Устройство не поддерживается</string>
+    <string name="LIBRARY_NOT_INSTALLED">Samsung Accessory не установлен</string>
+    <string name="UNKNOWN_ERROR">Не удалось запустить, неизвестная ошибка</string>
+    <string name="CANNOT_INIT">Samsung Accessory недоступен на этом устройстве</string>
+    <string name="NO_AGENT_FOUND">Часы не найдены. Откройте Docs View на часах</string>
+    <string name="NO_PEER_FOUND_ON_SEND">Часы не найдены. Попробуйте ещё раз</string>
+    <string name="CONNECTION_NOT_MADE">Не удалось подключиться. Попробуйте ещё раз</string>
+    <string name="ILLEGAL_ARGUMENT">Ошибка передачи</string>
+    <string name="onCancelAllCompletedNotFound">Передачи не найдены</string>
+    <string name="onCancelAllCompletedNotSupported">Действие не поддерживается</string>
+
+    <string name="notification_channel">Передача документов</string>
+    <string name="notification_channel_description">Соединение с часами</string>
+    <string name="notification_text">Готов к отправке документов</string>
+
+    <plurals name="characters">
+        <item quantity="one">%d символ</item>
+        <item quantity="few">%d символа</item>
+        <item quantity="many">%d символов</item>
+        <item quantity="other">%d символа</item>
+    </plurals>
+
 </resources>

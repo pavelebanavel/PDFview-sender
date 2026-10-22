@@ -2,31 +2,67 @@
 <resources>
 
     <string name="app_name" translatable="false">Docs View Sender</string>
-    <string name="send">Send</string>
-    <string name="seek_and_connect">Connect to watch</string>
+    <string name="app_title" translatable="false">Docs View</string>
+    <string name="app_subtitle">Send documents to your watch</string>
+
+    <string name="status_connected_short">Online</string>
+    <string name="status_connecting_short">Searching…</string>
+    <string name="status_offline_short">Offline</string>
+    <string name="status_connecting">Connecting…</string>
+    <string name="connect_watch">Connect watch</string>
+    <string name="connection_banner_title">Watch is not connected</string>
+    <string name="connection_banner_body">Open Docs View on your watch to establish a connection</string>
+
+    <string name="file_name">File name</string>
+    <string name="file_name_hint">for example, lecture notes</string>
+    <string name="content_label">Content</string>
+    <string name="content_hint">Write the text of your document…</string>
+
+    <string name="format">Format</string>
+    <string name="format_hint">File extension</string>
+    <string name="format_txt" translatable="false">.txt</string>
+    <string name="format_md" translatable="false">.md</string>
+
+    <string name="choose_document">Choose a ready document</string>
+    <string name="opening_document">Opening…</string>
+    <string name="selected_document_hint">%1$s · fields above are ignored</string>
+    <string name="clear_selection">Clear selection</string>
+
+    <string name="send_to_watch">Send to watch</string>
+    <string name="sending">Sending</string>
     <string name="cancel">Cancel</string>
-    <string name="cancelAll">Cancel All</string>
-    <string name="onCancelAllCompletedNotFound">onCancelAllCompleted : ERROR_TRANSACTION_NOT_FOUND.</string>
-    <string name="onCancelAllCompletedNotSupported">onCancelAllCompleted : ERROR_NOT_SUPPORTED.</string>
-    <string name="DEVICE_NOT_SUPPORTED">Device not supported</string>
-    <string name="LIBRARY_NOT_INSTALLED">Samsung library not installed</string>
-    <string name="UNKNOWN_ERROR">Cannot initialize, UNKNOWN</string>
-    <string name="CANNOT_INIT">Cannot initialize, SAft.</string>
-    <string name="NO_AGENT_FOUND">No device found</string>
-    <string name="ILLEGAL_ARGUMENT">IllegalArgumentException</string>
-    <string name="CONNECTION_ALREADY_EXIST">Watch connected</string>
-    <string name="CONNECTION_NOT_MADE">Connection could not be made. Please try again</string>
-    <string name="CONNECTION_OK">Watch connected</string>
-    <string name="NO_PEER_AGENT_FOUND">No Watch found yet. Please try again</string>
-    <string name="NO_PEER_FOUND_ON_SEND">No Watch found yet. Please try again</string>
-    <string name="choice_file">Choice file to send</string>
-    <string name="how_to">Open Docs View or PDFview app on your watch</string>
-    <string name="transfer_completed">Transfer Completed!</string>
+
+    <string name="error_empty_name">Enter a file name</string>
+    <string name="error_empty_content">Enter the document text</string>
+    <string name="error_create_document">Could not create the file</string>
+    <string name="error_import_document">Could not open the document</string>
+    <string name="error_bluetooth_permission">Bluetooth permission is required to find the watch</string>
+    <string name="error_send_failed">Could not send the document</string>
     <string name="error">Error</string>
-    <string name="no_binding">No binding to service</string>
-    <string name="not_bound">Service not Bound</string>
-    <string name="sending_file_toast">Sending file %1$s, size %2$s</string>
-    <string name="transfer_complete">Transfer Completed!</string>
+    <string name="connect_first">Connect the watch first</string>
+
+    <string name="transfer_complete">Document sent to the watch</string>
     <string name="sending_cancelled">Sending cancelled</string>
+    <string name="not_bound">Transfer service is not ready yet</string>
+
+    <string name="DEVICE_NOT_SUPPORTED">Device not supported</string>
+    <string name="LIBRARY_NOT_INSTALLED">Samsung Accessory library is not installed</string>
+    <string name="UNKNOWN_ERROR">Cannot initialize, unknown error</string>
+    <string name="CANNOT_INIT">Samsung Accessory is not available on this device</string>
+    <string name="NO_AGENT_FOUND">Watch not found. Open Docs View on the watch</string>
+    <string name="NO_PEER_FOUND_ON_SEND">Watch not found. Please try again</string>
+    <string name="CONNECTION_NOT_MADE">Connection could not be made. Please try again</string>
+    <string name="ILLEGAL_ARGUMENT">Transfer error</string>
+    <string name="onCancelAllCompletedNotFound">No transfers found</string>
+    <string name="onCancelAllCompletedNotSupported">Action is not supported</string>
+
+    <string name="notification_channel">Document transfer</string>
+    <string name="notification_channel_description">Connection with the watch</string>
+    <string name="notification_text">Ready to send documents</string>
+
+    <plurals name="characters">
+        <item quantity="one">%d character</item>
+        <item quantity="other">%d characters</item>
+    </plurals>
 
 </resources>

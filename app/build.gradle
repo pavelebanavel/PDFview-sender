@@ -1,30 +1,64 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.compose'
+}
 
 android {
-    compileSdkVersion 30
+    namespace 'com.vlack.pdfview.sender'
+    compileSdk 35
+
     defaultConfig {
         applicationId "com.vlack.pdfview.sender"
-        minSdkVersion 19
-        targetSdkVersion 30
-        versionCode 4
-        versionName '1.2.1'
+        minSdk 26
+        targetSdk 35
+        versionCode 5
+        versionName '2.0.0'
         vectorDrawables.useSupportLibrary = true
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    productFlavors {
+
+    buildFeatures {
+        compose true
     }
-    buildToolsVersion '30.0.3'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    packaging {
+        resources.excludes += ['/META-INF/{AL2.0,LGPL2.1}']
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
-    implementation 'com.github.javiersantos:AppUpdater:2.7'
+
+    implementation 'androidx.core:core-ktx:1.15.0'
+    implementation 'androidx.activity:activity-compose:1.10.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7'
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.8.7'
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
+
+    implementation 'androidx.compose.ui:ui:1.11.0-beta02'
+    implementation 'androidx.compose.ui:ui-graphics:1.11.0-beta02'
+    implementation 'androidx.compose.ui:ui-tooling-preview:1.11.0-beta02'
+    implementation 'androidx.compose.foundation:foundation:1.11.0-beta02'
+    implementation 'androidx.compose.material3:material3:1.5.0-alpha16'
+
+    debugImplementation 'androidx.compose.ui:ui-tooling:1.11.0-beta02'
+    debugImplementation 'androidx.compose.ui:ui-test-manifest:1.11.0-beta02'
+
+    testImplementation 'junit:junit:4.13.2'
 }
